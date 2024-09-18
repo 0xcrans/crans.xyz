@@ -283,7 +283,7 @@
         font-size: 0.9em;
     }
 
-    .fullscreen-loader {
+     #loader {
         position: fixed;
         top: 0;
         left: 0;
@@ -295,10 +295,9 @@
         align-items: center;
         z-index: 1000;
         transition: opacity 0.5s ease-in-out;
-        overflow: hidden;
     }
 
-    .fullscreen-loader::before {
+    #loader::before {
         content: "";
         position: absolute;
         top: -50%;
@@ -350,6 +349,8 @@
         .guestbook-container {
             padding: 10px;
             height: 100vh;
+            width: 100%;
+            border-radius: 0;
         }
 
         .content-section {
@@ -378,11 +379,19 @@
         #messages-container {
             max-height: 30vh;
         }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        #wallet-info {
+            font-size: 0.8em;
+        }
     }
 </style>
 </head>
 <body>
-    <div id="loader" class="fullscreen-loader">
+    <div id="loader">
         <div class="loader-content">
             <p>Loading...</p>
         </div>
@@ -425,19 +434,17 @@
     <script src="near-api-js.min.js"></script>
     <script src="tag-the-block.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-
-            window.addEventListener('load', function() {
-                setTimeout(() => {
-                    loader.style.opacity = '0';
-                    content.classList.add('visible');
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                    }, 500);
-                }, 500);
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            showLoadingScreen();
+                       setTimeout(() => {
+                initializeApp().then(() => {
+                    hideLoadingScreen();
+                }).catch(error => {
+                    console.error('Error during app initialization:', error);
+                    hideLoadingScreen();
+                    showCustomAlert('Failed to initialize the app. Please try again later.');
+                });
+            }, 500);
         });
     </script>
 </body>
