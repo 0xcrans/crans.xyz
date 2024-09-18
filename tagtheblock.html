@@ -33,7 +33,7 @@
         font-size: 16px;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         background: url('https://bafybeib2qommts7fwlnnnxmp2acnjm7gj32fsy4kxybvicbbr74eeea77q.ipfs.w3s.link/tagtheblock.gif') no-repeat center center fixed;
         background-size: cover;
@@ -301,9 +301,28 @@
         opacity: 1;
     }
 
+    /* Styl dla ekranów PC */
+    @media (min-width: 769px) {
+        body {
+            justify-content: center;
+        }
+
+        .guestbook-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #messages-container {
+            max-height: 50vh;
+        }
+    }
+
+    /* Styl dla urządzeń mobilnych */
     @media (max-width: 768px) {
         body {
             padding: 10px;
+            justify-content: flex-start;
         }
 
         .guestbook-container {
