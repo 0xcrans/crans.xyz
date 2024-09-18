@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Tag The Block - paulcrans.near</title>
+    <link rel="icon" type="image/png" href="https://bafybeihsakpzqq6yegmbpr4ytjwagydzrqhlnkpml67auufgd3l635u2l4.ipfs.w3s.link/ico.png">
+<style>
+    :root {
+        --text-color: #ffffff;
+        --background-color: rgba(0, 0, 255, 0.3);
+        --accent-color: #ff69b4;
+        --button-bg: rgba(0, 0, 0, 0.7);
+        --content-bg: rgba(0, 0, 0, 0.4);
+        --outer-container-bg: rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url('https://bafybeib2qommts7fwlnnnxmp2acnjm7gj32fsy4kxybvicbbr74eeea77q.ipfs.w3s.link/tagtheblock.gif') no-repeat center center fixed;
+        background-size: cover;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-color) var(--content-bg);
+    }
+
+    body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    body::-webkit-scrollbar-track {
+        background: var(--content-bg);
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--accent-color);
+        border-radius: 20px;
+        border: 2px solid var(--content-bg);
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--background-color);
+        z-index: -1;
+    }
+
+    .guestbook-container {
+        text-align: center;
+        z-index: 1;
+        background: var(--outer-container-bg);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        max-width: 900px;
+        width: 95%;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-color) var(--content-bg);
+    }
+
+    .guestbook-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .guestbook-container::-webkit-scrollbar-track {
+        background: var(--content-bg);
+    }
+
+    .guestbook-container::-webkit-scrollbar-thumb {
+        background-color: var(--accent-color);
+        border-radius: 20px;
+        border: 2px solid var(--content-bg);
+    }
+
+    .content-section {
+        background: var(--content-bg);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        color: var(--accent-color);
+    }
+
+    #instructions {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        border: 2px solid var(--accent-color);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+        margin: 0 auto 20px;
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    #messages-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    #messages-container {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 10px;
+        margin-bottom: 20px;
+        max-height: 40vh;
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-color) var(--content-bg);
+    }
+
+    #messages-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #messages-container::-webkit-scrollbar-track {
+        background: var(--content-bg);
+    }
+
+    #messages-container::-webkit-scrollbar-thumb {
+        background-color: var(--accent-color);
+        border-radius: 20px;
+        border: 2px solid var(--content-bg);
+    }
+
+    #message-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #message-input {
+        width: 100%;
+        height: 100px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--accent-color);
+        border-radius: 5px;
+        color: var(--text-color);
+        padding: 10px;
+        resize: none;
+    }
+
+    .input-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+    #char-count {
+        font-size: 0.8em;
+        color: var(--text-color);
+    }
+
+    .button {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        background-color: var(--button-bg);
+        color: var(--text-color);
+        border: 1px solid var(--text-color);
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        text-align: center;
+        font-size: 1rem;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: var(--text-color);
+        color: black;
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+
+    #wallet-info {
+        margin: 20px 0;
+        font-size: 0.9em;
+        text-align: center;
+    }
+
+    #disconnect-wallet {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .nav-button, #connect-wallet {
+        background-color: var(--button-bg);
+        color: var(--text-color);
+        border: 1px solid var(--text-color);
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .nav-button:hover, #connect-wallet:hover {
+        background-color: var(--text-color);
+        color: black;
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+
+    #connect-wallet-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
+    .message {
+        background-color: var(--content-bg);
+        border: 1px solid var(--accent-color);
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .message-author {
+        font-weight: bold;
+        color: var(--accent-color);
+    }
+
+    .message-date {
+        color: #aaa;
+        font-size: 0.9em;
+    }
+
+    .fullscreen-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #0000FF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 0.5s ease-in-out;
+        overflow: hidden;
+    }
+
+    .fullscreen-loader::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: 0;
+        width: 100%;
+        height: 200%;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 1px,
+            rgba(0, 0, 0, 0.3) 2px,
+            rgba(0, 0, 0, 0.3) 3px
+        );
+        animation: scanlines 10s linear infinite;
+        pointer-events: none;
+    }
+
+    .loader-content {
+        text-align: center;
+        color: #FF0000;
+        position: relative;
+        z-index: 1;
+    }
+
+    .loader-content p {
+        font-size: 1.5rem;
+        text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+    }
+
+    @keyframes scanlines {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(50%);
+        }
+    }
+
+    #content {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    #content.visible {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .guestbook-container {
+            padding: 10px;
+            height: 100vh;
+        }
+
+        .content-section {
+            padding: 10px;
+        }
+
+        #instructions {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        #message-input {
+            height: 80px;
+        }
+
+        .button, .nav-button, #connect-wallet {
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .navigation-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #messages-container {
+            max-height: 30vh;
+        }
+    }
+</style>
+</head>
+<body>
+    <div id="loader" class="fullscreen-loader">
+        <div class="loader-content">
+            <p>Loading...</p>
+        </div>
+    </div>
+    <div id="content" class="guestbook-container">
+        <div class="content-section">
+            <h1>TAG THE BLOCK</h1>
+            <div id="instructions">
+                Ok, so listen up, nerd! Connect your NEAR wallet, then drop a tag - but keep it snappy, 300 characters max, and be ready to pay Ⓝ 0.1 for the privilege. Once you're done, your digital graffiti will show up for all to see, forever - so make it right, yeah?
+            </div>
+            <div id="connect-wallet-container">
+                <button id="connect-wallet" class="nav-button">Connect Wallet</button>
+            </div>
+            <div id="messages-wrapper">
+                <div id="messages-container">
+                    <h3>Recent Tags</h3>
+                    <div id="message-list"></div>
+                </div>
+
+                <div id="message-form">
+                    <h3>Create Tag</h3>
+                    <div class="input-container">
+                        <textarea id="message-input" maxlength="300" placeholder="Type your message here (max 300 characters)"></textarea>
+                        <div class="input-controls">
+                            <div id="char-count">Characters left: 300</div>
+                            <button id="submit-message" class="button">Submit The Tag ~ Ⓝ 0.1</button>
+                        </div>
+                    </div>
+                    <div id="wallet-info" class="wallet-panel"></div>
+                    <button id="disconnect-wallet" class="button">Disconnect Wallet</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="devin.html" class="nav-button">← Go Back</a>
+            <a href="index.html" class="nav-button">Go to R00T →</a>
+        </div>
+    </div>
+    <script src="near-api-js.min.js"></script>
+    <script src="tag-the-block.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    content.classList.add('visible');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 500);
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

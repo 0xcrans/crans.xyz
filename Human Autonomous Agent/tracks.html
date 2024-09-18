@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Tracks - paulcrans.near</title>
+    <link rel="icon" type="image/png" href="https://bafybeihsakpzqq6yegmbpr4ytjwagydzrqhlnkpml67auufgd3l635u2l4.ipfs.w3s.link/ico.png">
+    <style>
+        :root {
+            --text-color: #ffffff;
+            --background-color: #0000FF;
+            --container-bg: rgba(0, 0, 0, 0.6);
+            --content-bg: rgba(0, 0, 0, 0.4);
+            --project-bg: rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-color);
+            font-size: 16px;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--background-color) url('https://bafybeib2qommts7fwlnnnxmp2acnjm7gj32fsy4kxybvicbbr74eeea77q.ipfs.w3s.link/index.gif') no-repeat center center;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        .outer-container {
+            background: var(--container-bg);
+            border-radius: 15px;
+            padding: 20px;
+            width: 95%;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .content-section {
+            background: var(--content-bg);
+            border-radius: 10px;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        .music-projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .project {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--project-bg);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .project:hover {
+            transform: scale(1.05);
+        }
+
+        .project-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info p {
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .back-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--project-bg);
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .button:hover {
+            background-color: var(--text-color);
+            color: var(--background-color);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        .fullscreen-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .fullscreen-loader::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(0, 0, 0, 0.3) 2px,
+                rgba(0, 0, 0, 0.3) 3px
+            );
+            animation: scanlines 10s linear infinite;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: #FF0000;
+            position: relative;
+            z-index: 1;
+        }
+
+        .loader-content p {
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+        }
+
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50%); }
+        }
+
+        @media (max-width: 600px) {
+            .music-projects {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .project-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .project-info p {
+                font-size: 0.9rem;
+            }
+
+            .button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .music-projects {
+                grid-template-columns: 1fr;
+            }
+
+            .project-logo {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader" class="fullscreen-loader">
+        <div class="loader-content">
+            <p>Loading...</p>
+        </div>
+    </div>
+    <div class="outer-container">
+        <div class="content-section">
+            <div class="music-projects">
+                <a href="https://senspace.studio/shop/drbooth-rektnoodle-cassette-talesfromthebooth" class="project" target="_blank" rel="noopener noreferrer">
+                    <img src="https://bafybeihsakpzqq6yegmbpr4ytjwagydzrqhlnkpml67auufgd3l635u2l4.ipfs.w3s.link/tracks_file.gif" alt="Tales From The Booth Cover" class="project-logo">
+                    <div class="project-info">
+                        <p>Tales From The Booth</p>
+                    </div>
+                </a>
+                <a href="hot16challenge.html" class="project">
+                    <img src="https://bafybeihsakpzqq6yegmbpr4ytjwagydzrqhlnkpml67auufgd3l635u2l4.ipfs.w3s.link/tracks_file.gif" alt="#hot16challenge Cover" class="project-logo">
+                    <div class="project-info">
+                        <p>#hot16challenge</p>
+                    </div>
+                </a>
+                <a href="https://soundcloud.com/paul_crans" target="_blank" rel="noopener noreferrer" class="project">
+                    <img src="https://bafybeihsakpzqq6yegmbpr4ytjwagydzrqhlnkpml67auufgd3l635u2l4.ipfs.w3s.link/tracks_file.gif" alt="Fast Joints Cover" class="project-logo">
+                    <div class="project-info">
+                        <p>Fast Joints</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="back-button-container">
+            <a href="index.html" class="button">← Go Back</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const container = document.querySelector('.outer-container');
+            
+            window.addEventListener('load', function() {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    container.style.opacity = '1';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

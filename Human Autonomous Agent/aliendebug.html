@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://*.w3s.link https://*.nftstorage.link https://*.dweb.link https://ipfs.io/ipfs/ https://*.githubusercontent.com https://tableland.network https://*.tableland.network; connect-src 'self' https://free.rpc.fastnear.com https://app.mynearwallet.com https://*.near.org https://*.near.me https://*.testnet.near.org https://*.testnet.near.me https://*.mainnet.near.org https://*.mainnet.near.me; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alien Debug - paulcrans.near</title>
+    <link rel="icon" type="image/png" href="https://bafybeihsakpzqq6yegmbpr4ytjwagydzrqhlnkpml67auufgd3l635u2l4.ipfs.w3s.link/ico.png">
+    <style>
+        :root {
+            --text-color: #ffffff;
+            --background-color: rgba(0, 0, 255, 0.3);
+            --accent-color: #ff69b4;
+            --button-bg: rgba(0, 0, 0, 0.7);
+            --content-bg: rgba(0, 0, 0, 0.4);
+            --outer-container-bg: rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('https://bafybeib2qommts7fwlnnnxmp2acnjm7gj32fsy4kxybvicbbr74eeea77q.ipfs.w3s.link/alien.gif') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-color);
+            z-index: -1;
+        }
+
+        .game-container {
+            text-align: center;
+            z-index: 1;
+            background: var(--outer-container-bg);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .content-section {
+            background: var(--content-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        #game-area {
+            width: 300px;
+            height: 300px;
+            border: 2px solid var(--accent-color);
+            position: relative;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .alien-monster {
+            position: absolute;
+            font-size: 30px;
+            user-select: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #score {
+            margin-top: 10px;
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            color: var(--accent-color);
+        }
+
+        #button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: var(--text-color);
+            color: black;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        #intro-message {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            min-height: 100px;
+            border: 2px solid var(--accent-color);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            margin: 0 auto 20px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        #wallet-details, #score {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 18px;
+            color: var(--text-color);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .nav-button {
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: var(--text-color);
+            color: black;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 400px) {
+            #game-area {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            #game-area {
+                width: 400px;
+                height: 400px;
+            }
+            #intro-message {
+                font-size: 18px;
+            }
+        }
+
+        .alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .alert-box {
+            background-color: var(--outer-container-bg);
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-color);
+            color: var(--text-color);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .alert-message {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .alert-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.5s ease-in-out;
+            text-transform: uppercase;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+        }
+
+        .alert-button:hover {
+            background-color: var(--text-color);
+            color: black;
+        }
+
+        .wallet-panel {
+            background-color: var(--outer-container-bg);
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px auto;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button {
+            width: auto;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .fullscreen-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0000FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
+            overflow: hidden;
+        }
+
+        .fullscreen-loader::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(0, 0, 0, 0.3) 2px,
+                rgba(0, 0, 0, 0.3) 3px
+            );
+            animation: scanlines 10s linear infinite;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: #FF0000;
+            position: relative;
+            z-index: 1;
+        }
+
+        .loader-content p {
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+        }
+
+        @keyframes scanlines {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(50%);
+            }
+        }
+
+        #content {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #content.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader" class="fullscreen-loader">
+        <div class="loader-content">
+            <p>Loading...</p>
+        </div>
+    </div>
+    <div id="content" class="game-container">
+        <div class="content-section">
+            <h1>ALIEN DEBUG</h1>
+            
+            <div id="wallet-info" class="wallet-panel" style="display: none;"></div>
+            
+            <div id="intro-message">
+                Those damn aliens! I've got a feeling some got into the block, and you gotta help me catch 'em out or they'll rat on the whole network! Oh, and don't forget to register $CRANS before debugging.
+            </div>
+            
+            <div id="game-area" style="display: none;"></div>
+            
+            <div id="score" style="display: none;">Alien monsters caught: 0 / 10</div>
+            
+            <div id="button-container">
+                <button id="connect-wallet" class="button">Connect Wallet</button>
+                <button id="register-crans" class="button" style="display: none;">Register $CRANS</button>
+                <button id="start-game" class="button" style="display: none;">Start Debugging</button>
+                <button id="disconnect-wallet" class="button" style="display: none;">Disconnect Wallet</button>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="devin.html" class="nav-button">← Go Back</a>
+            <a href="index.html" class="nav-button">Go to R00T →</a>
+        </div>
+    </div>
+
+    <script src="near-api-js.min.js"></script>
+    <script src="alien-debug.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    content.classList.add('visible');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 500);
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
