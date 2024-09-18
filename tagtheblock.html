@@ -23,7 +23,7 @@
 
     html, body {
         height: 100%;
-        overflow: hidden;
+        overflow-x: hidden;
     }
 
     body {
@@ -32,26 +32,15 @@
         color: var(--text-color);
         font-size: 16px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
         background: url('https://bafybeib2qommts7fwlnnnxmp2acnjm7gj32fsy4kxybvicbbr74eeea77q.ipfs.w3s.link/tagtheblock.gif') no-repeat center center fixed;
         background-size: cover;
         scrollbar-width: thin;
         scrollbar-color: var(--accent-color) var(--content-bg);
-    }
-
-    body::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    body::-webkit-scrollbar-track {
-        background: var(--content-bg);
-    }
-
-    body::-webkit-scrollbar-thumb {
-        background-color: var(--accent-color);
-        border-radius: 20px;
-        border: 2px solid var(--content-bg);
+        padding: 20px 10px;
+        min-height: 100vh;
     }
 
     body::before {
@@ -73,27 +62,11 @@
         border-radius: 15px;
         box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
         max-width: 900px;
-        width: 95%;
-        height: 90vh;
+        width: 100%;
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: var(--accent-color) var(--content-bg);
-    }
-
-    .guestbook-container::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .guestbook-container::-webkit-scrollbar-track {
-        background: var(--content-bg);
-    }
-
-    .guestbook-container::-webkit-scrollbar-thumb {
-        background-color: var(--accent-color);
-        border-radius: 20px;
-        border: 2px solid var(--content-bg);
+        margin-bottom: 20px;
     }
 
     .content-section {
@@ -101,7 +74,6 @@
         border-radius: 10px;
         padding: 20px;
         margin-bottom: 20px;
-        flex-grow: 1;
         display: flex;
         flex-direction: column;
     }
@@ -144,22 +116,6 @@
         padding-right: 10px;
         margin-bottom: 20px;
         max-height: 40vh;
-        scrollbar-width: thin;
-        scrollbar-color: var(--accent-color) var(--content-bg);
-    }
-
-    #messages-container::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    #messages-container::-webkit-scrollbar-track {
-        background: var(--content-bg);
-    }
-
-    #messages-container::-webkit-scrollbar-thumb {
-        background-color: var(--accent-color);
-        border-radius: 20px;
-        border: 2px solid var(--content-bg);
     }
 
     #message-form {
@@ -283,7 +239,7 @@
         font-size: 0.9em;
     }
 
-     #loader {
+    #loader {
         position: fixed;
         top: 0;
         left: 0;
@@ -346,11 +302,15 @@
     }
 
     @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
         .guestbook-container {
             padding: 10px;
-            height: 100vh;
             width: 100%;
-            border-radius: 0;
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
 
         .content-section {
@@ -372,7 +332,7 @@
         }
 
         .navigation-buttons {
-            flex-direction: column;
+            flex-direction: row;
             gap: 10px;
         }
 
@@ -436,7 +396,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             showLoadingScreen();
-                       setTimeout(() => {
+            setTimeout(() => {
                 initializeApp().then(() => {
                     hideLoadingScreen();
                 }).catch(error => {
