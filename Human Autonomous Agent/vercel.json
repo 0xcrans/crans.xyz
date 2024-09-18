@@ -16,7 +16,7 @@
       "continue": true
     },
     { "src": "/", "dest": "/index.html" },
-    { "src": "/((?!.*\\.html$).*)", "dest": "/$1.html" },
-    { "src": "/(.*)", "dest": "/$1" }
-  ]
+    { "src": "/(.+)", "dest": "/$1.html" }
+  ],
+  "cleanUrls": true
 }
