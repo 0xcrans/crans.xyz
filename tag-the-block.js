@@ -40,7 +40,8 @@ async function updateDisplay() {
     
     if (isSignedIn) {
         const accountId = wallet.getAccountId();
-        let infoText = `Connected as: ${accountId}<br>`;
+        const formattedAccountId = formatAccountId(accountId);
+        let infoText = `Connected as: ${formattedAccountId}<br>`;
         
         try {
             const account = await near.account(accountId);
@@ -66,6 +67,13 @@ async function updateDisplay() {
     }
 
     updateUIVisibility(isSignedIn);
+}
+
+function formatAccountId(accountId) {
+    if (accountId.length > 32) {
+        return `${accountId.slice(0, 4)}...${accountId.slice(-4)}`;
+    }
+    return accountId;
 }
 
 async function fetchCRANSBalance(accountId) {
@@ -109,21 +117,21 @@ async function displayMessages() {
         messageList.innerHTML = ''; // Clear the loading message
 
         // Reverse the order of messages before displaying
-        allMessages.reverse().forEach((message) => {
-            const messageElement = document.createElement('div');
-            messageElement.className = 'message';
-            
-            // Assuming the message structure is { text, author, timestamp }
-            const { text, author, timestamp } = message;
+    allMessages.reverse().forEach((message) => {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message';
+        
+        const { text, author, timestamp } = message;
+        const formattedAuthor = formatAccountId(author);
 
-            const date = new Date(parseInt(timestamp) / 1000000);
-            messageElement.innerHTML = `
-                <span class="message-author">${escapeHTML(author)}</span>
-                <span class="message-date">${date.toLocaleString()}</span>
-                <p class="message-text">${escapeHTML(text)}</p>
-            `;
-            messageList.appendChild(messageElement);
-        });
+        const date = new Date(parseInt(timestamp) / 1000000);
+        messageElement.innerHTML = `
+            <span class="message-author">${escapeHTML(formattedAuthor)}</span>
+            <span class="message-date">${date.toLocaleString()}</span>
+            <p class="message-text">${escapeHTML(text)}</p>
+        `;
+        messageList.appendChild(messageElement);
+    });
 
         // Scroll to the top of the message list
         messageList.scrollTop = 0;
