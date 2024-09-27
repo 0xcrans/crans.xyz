@@ -414,7 +414,7 @@ async function claimReward() {
         setGameState(GAME_STATES.CLAIMED);
     } catch (error) {
         console.error("Error in claim reward process:", error);
-        showCustomAlert("There was an error processing your request. Please try again.");
+        showCustomAlert("You need to register for CRANS token first. Please register and try again.");
         setGameState(GAME_STATES.ENDED);
     } finally {
         localStorage.removeItem('claimInProgress');
