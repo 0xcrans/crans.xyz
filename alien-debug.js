@@ -63,6 +63,13 @@ async function initContract() {
 }
 
 // Helper functions
+function formatAccountId(accountId) {
+    if (accountId.length > 32) {
+        return `${accountId.slice(0, 4)}...${accountId.slice(-4)}`;
+    }
+    return accountId;
+}
+
 function getTransactionHashFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('transactionHashes');
