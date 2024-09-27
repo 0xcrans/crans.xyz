@@ -212,11 +212,12 @@ async function updateGameDisplay() {
     
     if (isSignedIn) {
         const accountId = wallet.getAccountId();
+        const formattedAccountId = formatAccountId(accountId); // Use the formatting function here
         try {
             const accountDetails = await fetchAccountDetails(accountId);
             const cransBalance = await fetchCRANSBalance(accountId);
             
-            let infoText = `Connected as: ${accountDetails.accountId}<br>`;
+            let infoText = `Connected as: ${formattedAccountId}<br>`; // Use the formatted account ID
             infoText += `${accountDetails.balance} NEAR<br>`;
             infoText += `${cransBalance} CRANS`;
             
