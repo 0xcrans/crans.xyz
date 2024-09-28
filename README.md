@@ -1,6 +1,6 @@
 # Human Autonomous Agent
 
-Personal website and portfolio showcasing blockchain development, decentralized applications (dApps), and music production by paulcrans.near.
+Peculiar website.
 
 ## Overview
 
@@ -8,10 +8,9 @@ This project is an interactive web experience integrating blockchain technology,
 
 ## Features
 
-* Integration with NEAR Protocol blockchain
+* Integration with NEAR blockchain
 * Wallet connection functionality
-* Interactive blockchain-based games and applications
-* Music project portfolio
+* Interactive portfolio and blockchain-based games and applications
 * Responsive design for desktop and mobile devices
 
 ## Project Structure
