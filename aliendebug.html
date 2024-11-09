@@ -373,20 +373,34 @@
     <script src="near-api-js.min.js"></script>
     <script src="alien-debug.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loader = document.getElementById('loader');
-            const content = document.getElementById('content');
-
-            window.addEventListener('load', function() {
-                setTimeout(() => {
-                    loader.style.opacity = '0';
-                    content.classList.add('visible');
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                    }, 500);
-                }, 500);
-            });
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('loader');
+    const content = document.getElementById('content');
+    
+    const backgroundImages = [
+        'https://bafybeib2qommts7fwlnnnxmp2acnjm7gj32fsy4kxybvicbbr74eeea77q.ipfs.w3s.link/alien.gif',
+    ];
+    
+    let loadedImages = 0;
+    
+    function checkAllImagesLoaded() {
+        loadedImages++;
+        if (loadedImages === backgroundImages.length) {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                content.classList.add('visible');
+            }, 500);
+        }
+    }
+    
+    backgroundImages.forEach(imageUrl => {
+        const img = new Image();
+        img.src = imageUrl;
+        img.onload = checkAllImagesLoaded;
+        img.onerror = checkAllImagesLoaded;    
+    });
+});
     </script>
 </body>
 </html>
