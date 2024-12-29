@@ -146,7 +146,7 @@
 }
 .loader-content {
     text-align: center;
-    color: #FF0000; /* Bright red text */
+    color: #FF0000;
     position: relative;
     z-index: 1;
 }
@@ -177,30 +177,39 @@
             <h1>The Repository</h1>
             <div class="faq-projects">
                 <div class="project">
+                    <div class="project-info">┌ crans.tkn.near ┐</div>
+                    <div class="project-description">
+                        /krans.token.nir/ noun, configurative<br><br>
+                        Token configured with 24 decimal places on NEAR protocol<br><br>
+                        Synonyms: token / index / share<br>
+                        Related word: flawless victory
+                    </div>
+                </div>
+                <div class="project">
                     <div class="project-info">┌ DAOs ┐</div>
                     <div class="project-description">
                         /daʊz/ noun, plural<br><br>
-    Decentralized Autonomous Organizations: blockchain-based entities governed by their communities.<br><br>
-    Synonyms: autonomous collectives<br>
-    Related word: governance 
+                        Decentralized Autonomous Organizations: blockchain-based entities governed by their communities.<br><br>
+                        Synonyms: autonomous collectives<br>
+                        Related word: governance 
                     </div>
                 </div>
                 <div class="project">
                     <div class="project-info">┌ Devin' ┐</div>
                     <div class="project-description">
                         /dɛvɪn/ verb, informal<br><br>
-        Colloquial way of referring to the act of development.<br><br>
-        Synonyms: coding / building / hacking<br>
-        Related word: web3
+                        Colloquial way of referring to the act of development.<br><br>
+                        Synonyms: coding / building / hacking<br>
+                        Related word: web3
                     </div>
                 </div>
                 <div class="project">
                     <div class="project-info">┌ Tracks ┐</div>
                     <div class="project-description">
                         /træks/ noun, plural<br><br>
-        Audio recordings made individually or through collaboration with other artists.<br><br>
-        Synonyms: music production / beatmaking<br>
-        Related word: DAW 
+                        Audio recordings made individually or through collaboration with other artists.<br><br>
+                        Synonyms: music production / beatmaking<br>
+                        Related word: DAW 
                     </div>
                 </div>
             </div>
@@ -214,7 +223,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('loader');
     const content = document.getElementById('content');
 
-    // Hide loader and show content when page is fully loaded
     window.addEventListener('load', function() {
         loader.style.opacity = '0';
         setTimeout(() => {
